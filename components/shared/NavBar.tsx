@@ -57,7 +57,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full">
       {/* LAYER 1: Social & Contact (Blue Bar) */}
-      <div className="bg-[#02557f] text-white py-2 px-6">
+      <div className="bg-[#d53f34] text-white py-2 px-6">
         <div className="container mx-auto flex justify-between items-center text-xs font-medium">
           <a 
             href="mailto:info@dingonet.com" 

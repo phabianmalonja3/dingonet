@@ -1,134 +1,140 @@
 "use client";
 
-import { Calendar, MapPin, Ticket, ArrowRight, Sparkles } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowRight, Sparkles, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const EVENTS = [
+const INITIATIVES = [
   {
-    id: "evt-001",
+    id: "init-001",
     title: "Digital Literacy Workshop",
     date: "March 15, 2026",
     location: "Dar es Salaam",
     image: "/images/impact-2.jpg",
     category: "Education",
-    description: "Equipping local youth with essential coding and internet safety skills."
+    description: "Equipping local youth with essential coding and internet safety skills to bridge the digital divide."
   },
   {
-    id: "evt-002",
+    id: "init-002",
     title: "Rural Connectivity Summit",
     date: "April 02, 2026",
     location: "Arusha",
     image: "/images/slider.jpg",
-    category: "Crisis Tech",
-    description: "Discussing infrastructure expansion for underserved Tanzanian villages."
+    category: "Infrastructure",
+    description: "Strategic planning for deploying mesh networks in underserved Tanzanian villages."
   }
-  // ... rest of your events
 ];
 
 export default function EventsSection() {
   
-  const handleClaimVoucher = async (eventId: string) => {
-    // This addresses your preference to save to database to avoid re-scanning
-    try {
-      console.log(`Saving voucher for event ${eventId} to your database...`);
-      // Add your fetch/prisma logic here
-      alert("Voucher Saved! It is now stored in your database for offline use.");
-    } catch (error) {
-      console.error("Failed to save voucher", error);
-    }
+  // Refocused logic: Joining a humanitarian movement
+  const handleJoinInitiative = (initId: string) => {
+    console.log(`User expressing interest in Humanitarian Initiative: ${initId}`);
+    // Logic for volunteer sign-up or local coordination
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-slate-50 dark:bg-zinc-950 overflow-hidden relative">
+    <section className="py-24 lg:py-32 bg-white dark:bg-black overflow-hidden relative">
       
-      {/* Background Decorative Element */}
-      <div className="absolute top-0 right-0 p-20 opacity-5 pointer-events-none">
-        <Sparkles size={400} className="text-[#d53f34]" />
+      {/* Decorative Branding Element */}
+      <div className="absolute -top-24 -right-24 opacity-5 pointer-events-none">
+        <Sparkles size={600} className="text-[#d53f34]" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-[#d53f34] font-black tracking-[0.3em] font-brittany text-xl mb-4 flex items-center gap-2"
-          >
-            <span className="w-8 h-[2px] bg-[#d53f34]"></span>
-            Upcoming Initiatives
-            <span className="w-8 h-[2px] bg-[#d53f34]"></span>
-          </motion.div>
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
+          <div className="max-w-3xl">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="text-[#d53f34] font-black tracking-[0.3em] uppercase text-xs mb-6 flex items-center gap-3"
+            >
+              <span className="w-12 h-[2px] bg-[#d53f34]"></span>
+              Active Field Operations
+            </motion.div>
+            
+            <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[0.9] tracking-tighter">
+              Humanitarian <br />
+              <span className="text-[#d53f34] italic font-serif lowercase">Initiatives.</span>
+            </h2>
+          </div>
           
-          <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-tight tracking-tighter mb-6">
-            Be Part of the <span className="text-[#d53f34] italic font-serif">Change.</span>
-          </h2>
-          
-          <Link href="/events" className="group flex items-center gap-2 text-slate-500 hover:text-[#d53f34] font-black text-sm transition-all uppercase tracking-widest">
-            View All Events 
-            <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+          <Link href="/initiatives" className="group flex items-center gap-3 bg-slate-50 dark:bg-zinc-900 px-8 py-4 rounded-2xl text-slate-900 dark:text-white font-black text-xs transition-all uppercase tracking-widest border border-slate-100 dark:border-zinc-800 hover:border-[#d53f34]">
+            Explore All Missions 
+            <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform text-[#d53f34]" />
           </Link>
         </div>
 
-        {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-12">
-          {EVENTS.map((event, index) => (
+        {/* Initiatives Grid */}
+        <div className="grid lg:grid-cols-2 gap-10">
+          {INITIATIVES.map((init, index) => (
             <motion.div 
-              key={event.id}
+              key={init.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="group bg-white dark:bg-zinc-900 rounded-[3rem] overflow-hidden border border-slate-100 dark:border-zinc-800 hover:shadow-3xl hover:shadow-[#d53f34]/10 transition-all duration-500"
+              className="group flex flex-col md:flex-row bg-slate-50 dark:bg-zinc-950 rounded-[3rem] overflow-hidden border border-slate-100 dark:border-zinc-900 hover:border-[#d53f34]/30 transition-all duration-500"
             >
               
               {/* Image Section */}
-              <div className="relative h-72 overflow-hidden">
+              <div className="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
                 <img 
-                  src={event.image} 
-                  alt={event.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                  src={init.image} 
+                  alt={init.title} 
+                  className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110" 
                 />
-                <div className="absolute top-6 left-6 bg-[#d53f34] text-white text-[10px] font-black px-5 py-2 rounded-full uppercase tracking-widest shadow-xl">
-                  {event.category}
-                </div>
-                {/* Glassmorphism Date Tag */}
-                <div className="absolute bottom-6 left-6 backdrop-blur-md bg-white/20 border border-white/30 px-4 py-2 rounded-2xl text-white font-bold text-xs flex items-center gap-2">
-                   <Calendar size={14} /> {event.date}
+                <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/90 backdrop-blur-md text-slate-900 dark:text-white text-[9px] font-black px-4 py-2 rounded-xl uppercase tracking-widest">
+                  {init.category}
                 </div>
               </div>
 
               {/* Content Body */}
-              <div className="p-10 lg:p-12">
-                <div className="flex items-center gap-2 text-[#d53f34] mb-4 font-bold text-sm">
-                  <MapPin size={16} />
-                  {event.location}
+              <div className="w-full md:w-3/5 p-8 lg:p-10 flex flex-col">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+                    <Calendar size={14} className="text-[#d53f34]" /> {init.date}
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+                    <MapPin size={14} className="text-[#d53f34]" /> {init.location}
+                  </div>
                 </div>
 
-                <h4 className="text-3xl font-black text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-[#d53f34] transition-colors uppercase tracking-tight">
-                  {event.title}
+                <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 leading-tight uppercase tracking-tight group-hover:text-[#d53f34] transition-colors">
+                  {init.title}
                 </h4>
                 
-                <p className="text-slate-500 dark:text-zinc-400 leading-relaxed mb-10 text-lg font-medium">
-                  {event.description}
+                <p className="text-slate-500 dark:text-zinc-400 leading-relaxed mb-8 text-sm font-medium">
+                  {init.description}
                 </p>
 
-                {/* Database Voucher Button */}
+                {/* Join Movement Button */}
                 <button 
-                  onClick={() => handleClaimVoucher(event.id)}
-                  className="relative w-full flex items-center justify-center gap-3 bg-zinc-900 dark:bg-zinc-800 text-white py-5 rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] overflow-hidden group/btn hover:bg-[#d53f34] transition-all"
+                  onClick={() => handleJoinInitiative(init.id)}
+                  className="mt-auto w-full flex items-center justify-center gap-3 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] group/btn hover:bg-[#d53f34] hover:border-[#d53f34] hover:text-white transition-all shadow-sm"
                 >
-                  <Ticket size={20} className="group-hover/btn:-rotate-12 transition-transform" />
-                  Claim & Save Voucher
-                  
-                  {/* Decorative Hand-drawn SVG effect inside button */}
-                  <svg className="absolute inset-0 w-full h-full opacity-0 group-hover/btn:opacity-20 pointer-events-none" viewBox="0 0 100 40">
-                    <path d="M5 20 Q 50 5 95 20 T 5 20" stroke="white" fill="none" strokeWidth="1" />
-                  </svg>
+                  <Users size={16} className="group-hover/btn:scale-110 transition-transform" />
+                  Join This Initiative
                 </button>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Support Banner */}
+        <div className="mt-20 p-10 lg:p-16 rounded-[4rem] bg-[#02557f] relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-10">
+           <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20L0 20z' fill='%23fff'/%3E%3C/svg%3E")` }} 
+           />
+           <div className="relative z-10 text-center lg:text-left">
+              <h3 className="text-white text-3xl lg:text-5xl font-black tracking-tighter mb-4">Cannot attend in person?</h3>
+              <p className="text-white/70 font-medium max-w-xl">You can still fuel our humanitarian response by supporting the logistics of these field operations.</p>
+           </div>
+           <Link href="/donate" className="relative z-10 bg-white text-[#02557f] px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#d53f34] hover:text-white transition-all active:scale-95 flex items-center gap-3">
+              <HeartHandshake size={20} />
+              Support Effort
+           </Link>
         </div>
       </div>
     </section>

@@ -66,7 +66,7 @@ export default function TestimonialSection() {
         
         {/* Section Heading */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 font-brittany rounded-full bg-[#d53f34]/10 text-[#d53f34] text-[10px] font-black uppercase tracking-[0.2em]">
+          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 font-brittany rounded-full bg-[#d53f34]/10 text-[#d53f34] text-xl font-black  tracking-[0.2em]">
             <Sparkles size={14} className="fill-[#d53f34]" /> 
             Voices of Change
           </div>
