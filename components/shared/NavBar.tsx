@@ -80,13 +80,14 @@ export default function Navbar() {
         <div className="container mx-auto flex h-20 items-center justify-between">
           
           {/* Logo */}
-          <Link href="/" className="relative h-10 w-32 transition-transform hover:scale-105">
-            <Image
+          <Link href="/" className="relative h-10 w-32 transition-transform hover:scale-105 text-4xl font-black text-[#d53f34]">
+            {/* <Image
               src="/logo.svg"
               alt="Dingonet Logo"
               fill
               className="object-contain dark:invert"
-            />
+            /> */}
+            Dingonet
           </Link>
 
           {/* Desktop Links */}
