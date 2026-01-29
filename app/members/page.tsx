@@ -1,8 +1,8 @@
-"use client"; // Required for Framer Motion
+"use client";
 
 import { Linkedin, Mail, Twitter } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // Added Variants import
 
 const TEAM_MEMBERS = [
   {
@@ -27,23 +27,27 @@ const TEAM_MEMBERS = [
   },
 ];
 
-// Animation Variants
-const containerVariants = {
+// Explicitly typed as Variants
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Each card appears one after another
+      staggerChildren: 0.1,
     },
   },
 };
 
-const cardVariants = {
+// Explicitly typed as Variants
+const cardVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: { 
     y: 0, 
     opacity: 1,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { 
+      duration: 0.5, 
+      ease: "easeOut" // TypeScript now knows this is a valid easing string
+    }
   },
 };
 
@@ -71,10 +75,9 @@ export default function MembersPage() {
           <motion.div 
             key={member.id} 
             variants={cardVariants}
-            whileHover={{ scale: 1.02 }} // Subtle pop on hover
+            whileHover={{ scale: 1.02 }}
             className="group relative overflow-hidden rounded-2xl bg-white p-4 shadow-md dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800"
           >
-            {/* Image Container */}
             <div className="relative h-64 w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-zinc-800">
               {member.imageUrl ? (
                 <Image 
@@ -100,7 +103,6 @@ export default function MembersPage() {
                 {member.bio}
               </p>
 
-              {/* Social Links */}
               <div className="mt-6 flex justify-center gap-4 text-slate-400">
                 {member.linkedin && (
                   <motion.a 
