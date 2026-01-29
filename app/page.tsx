@@ -1,5 +1,4 @@
-import Hero from '@/components/shared/Hero'
-
+import Home from "@/components/shared/Home";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,6 +6,6 @@ export const metadata: Metadata = {
   description: "Dingonet is a non-profit organization dedicated to providing affordable internet access and digital skills to underserved communities across Tanzania.",
 };
 
-export default function Home() {
-  return <Hero />
+export default function HomePage() {
+  return <Home  />;
 }

@@ -3,64 +3,60 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { School, Activity, Users2, Landmark, HeartHandshake, Baby } from "lucide-react";
+import { School, Activity, Users2, Landmark, HeartHandshake, Baby, Sparkles } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 const PARTNERS = [
-  { name: "Public Schools", icon: <School size={32} />, id: 1 },
-  { name: "Rural Clinics", icon: <Activity size={32} />, id: 2 },
-  { name: "Youth Centers", icon: <Users2 size={32} />, id: 3 },
-  { name: "Local Councils", icon: <Landmark size={32} />, id: 4 },
-  { name: "Orphanages", icon: <Baby size={32} />, id: 5 },
-  { name: "Women Groups", icon: <HeartHandshake size={32} />, id: 6 },
+  { name: "Public Schools", icon: <School size={32} /> },
+  { name: "Rural Clinics", icon: <Activity size={32} /> },
+  { name: "Youth Centers", icon: <Users2 size={32} /> },
+  { name: "Local Councils", icon: <Landmark size={32} /> },
+  { name: "Orphanages", icon: <Baby size={32} /> },
+  { name: "Women Groups", icon: <HeartHandshake size={32} /> },
 ];
 
 export default function ClientsSection() {
-  // 1. Added explicit HTML types to the Refs
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance animation for the text
+      // 1. Header Entrance
       if (headerRef.current) {
         gsap.from(headerRef.current, {
           scrollTrigger: {
             trigger: headerRef.current,
-            start: "top 85%",
+            start: "top 90%",
           },
-          y: 40,
+          y: 30,
           opacity: 0,
-          duration: 1.2,
-          ease: "power4.out",
+          duration: 1,
+          ease: "expo.out",
         });
       }
 
-      // 2. GSAP Infinite Sliding Loop
+      // 2. Seamless Marquee Logic
       const slider = sliderRef.current;
-      
-      // We check if slider exists to satisfy TypeScript
       if (slider) {
+        // Calculate half width for the loop
         const loop = gsap.to(slider, {
           xPercent: -50,
           ease: "none",
-          duration: 20,
+          duration: 25, // Slower, more cinematic speed
           repeat: -1,
         });
 
-        // 3. Hover Interactions: Resolved the 'never' error
-        // Using manual listeners on the typed element
-        const handleMouseEnter = () => gsap.to(loop, { timeScale: 0, duration: 0.5 });
-        const handleMouseLeave = () => gsap.to(loop, { timeScale: 1, duration: 0.5 });
+        // Smooth speed control on hover
+        const handleMouseEnter = () => gsap.to(loop, { timeScale: 0.2, duration: 0.8 });
+        const handleMouseLeave = () => gsap.to(loop, { timeScale: 1, duration: 0.8 });
 
         slider.addEventListener("mouseenter", handleMouseEnter);
         slider.addEventListener("mouseleave", handleMouseLeave);
 
-        // Cleanup listeners inside the context
         return () => {
           slider.removeEventListener("mouseenter", handleMouseEnter);
           slider.removeEventListener("mouseleave", handleMouseLeave);
@@ -72,40 +68,60 @@ export default function ClientsSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-white dark:bg-black overflow-hidden border-t border-slate-100 dark:border-zinc-900">
-      <div className="container mx-auto px-6 mb-16 text-center" ref={headerRef}>
-        <div className="inline-block bg-[#038ED3] px-8 py-2 mb-6">
-          <h2 className="font-script text-4xl text-white tracking-wide">
-            Our Impact Partners
-          </h2>
+    <section ref={containerRef} className="py-24 bg-white dark:bg-black overflow-hidden relative">
+      
+      {/* Background Decorative "Stamps" */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 dark:via-zinc-800 to-transparent" />
+
+      <div className="container mx-auto px-6 mb-20 text-center" ref={headerRef}>
+        <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-[#d53f34]/10 text-[#d53f34] text-[10px] font-black uppercase tracking-[0.2em]">
+          <Sparkles size={14} className="fill-[#d53f34]" /> 
+          Our Ecosystem
         </div>
-        <p className="text-slate-500 dark:text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
-          We collaborate with community leaders and institutions to bring 
-          digital opportunities to the heart of Tanzania.
+        <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter leading-none mb-6">
+          Impact <span className="text-[#d53f34]">Together.</span>
+        </h2>
+        <p className="text-slate-500 dark:text-zinc-400 max-w-xl mx-auto text-lg font-medium leading-relaxed">
+          Connecting local wisdom with digital infrastructure through our trusted community partners.
         </p>
       </div>
 
-      <div className="relative flex border-y border-slate-100 dark:border-zinc-900 py-16 bg-slate-50/50 dark:bg-zinc-900/20">
-        <div ref={sliderRef} className="flex whitespace-nowrap">
-          {[...PARTNERS, ...PARTNERS].map((partner, index) => (
-            <div key={index} className="flex items-center justify-center mx-16">
-              <div className="flex items-center gap-6 group cursor-default">
-                <div className="w-20 h-20 rounded-[2rem] bg-white dark:bg-zinc-800 shadow-xl shadow-[#038ED3]/5 border border-slate-100 dark:border-zinc-700 flex items-center justify-center text-[#038ED3] group-hover:bg-[#038ED3] group-hover:text-white transition-all duration-500 transform group-hover:-rotate-12 group-hover:scale-110">
-                  {partner.icon}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl font-black text-slate-300 dark:text-zinc-700 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-500 uppercase tracking-tighter">
-                    {partner.name}
-                  </span>
-                  <span className="text-[10px] font-bold text-[#038ED3] opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-[0.2em]">
-                    Community Impact
-                  </span>
+      {/* Marquee Wrapper */}
+      <div className="relative group">
+        {/* Side Fades for the Cinematic Look */}
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none" />
+
+        <div className="flex border-y border-slate-100 dark:border-zinc-900/50 py-12 bg-slate-50/30 dark:bg-zinc-900/10 backdrop-blur-sm">
+          <div ref={sliderRef} className="flex whitespace-nowrap">
+            {/* Double the array for seamless loop */}
+            {[...PARTNERS, ...PARTNERS].map((partner, index) => (
+              <div key={index} className="flex items-center mx-12">
+                <div className="flex items-center gap-6 group/item cursor-pointer">
+                  {/* Icon Container with Doodle Effect */}
+                  <div className="w-20 h-20 rounded-[2.5rem] bg-white dark:bg-zinc-800 shadow-xl shadow-black/5 border border-slate-100 dark:border-zinc-700 flex items-center justify-center text-[#d53f34] group-hover/item:bg-[#d53f34] group-hover/item:text-white transition-all duration-500 transform group-hover/item:rotate-6 group-hover/item:scale-110">
+                    {partner.icon}
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <span className="text-3xl font-black text-slate-300 dark:text-zinc-800 group-hover/item:text-slate-900 dark:group-hover/item:text-white transition-all duration-500 uppercase tracking-tighter">
+                      {partner.name}
+                    </span>
+                    <div className="overflow-hidden">
+                       <span className="block text-[9px] font-black text-[#d53f34] translate-y-full group-hover/item:translate-y-0 transition-transform duration-300 uppercase tracking-[0.3em]">
+                        Active Partner
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Subtle Bottom Border */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 dark:via-zinc-800 to-transparent" />
     </section>
   );
 }

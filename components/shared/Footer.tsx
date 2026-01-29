@@ -48,13 +48,13 @@ export default function Footer() {
               innovative network solutions and dedicated support.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#038ED3] hover:bg-[#038ED3] hover:text-white transition-all">
+              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#02557f] hover:bg-[#02557f] hover:text-white transition-all">
                 <Linkedin size={18} />
               </a>
-              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#038ED3] hover:bg-[#038ED3] hover:text-white transition-all">
+              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#02557f] hover:bg-[#02557f] hover:text-white transition-all">
                 <Twitter size={18} />
               </a>
-              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#038ED3] hover:bg-[#038ED3] hover:text-white transition-all">
+              <a href="#" className="p-2 rounded-full bg-white shadow-sm text-[#02557f] hover:bg-[#02557f] hover:text-white transition-all">
                 <Facebook size={18} />
               </a>
             </div>
@@ -66,7 +66,7 @@ export default function Footer() {
             <ul className="space-y-4">
               {FOOTER_LINKS.company.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-slate-500 hover:text-[#038ED3] dark:text-slate-400 transition-colors">
+                  <Link href={link.href} className="text-sm text-slate-500 hover:text-[#02557f] dark:text-slate-400 transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -80,7 +80,7 @@ export default function Footer() {
             <ul className="space-y-4">
               {FOOTER_LINKS.services.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-slate-500 hover:text-[#038ED3] dark:text-slate-400 transition-colors">
+                  <Link href={link.href} className="text-sm text-slate-500 hover:text-[#02557f] dark:text-slate-400 transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -93,15 +93,15 @@ export default function Footer() {
             <h4 className="text-slate-900 dark:text-white font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-slate-500 dark:text-slate-400">
-                <MapPin size={18} className="text-[#038ED3] shrink-0" />
+                <MapPin size={18} className="text-[#02557f] shrink-0" />
                 <span>Dar es Salaam, Tanzania</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
-                <Phone size={18} className="text-[#038ED3] shrink-0" />
+                <Phone size={18} className="text-[#02557f] shrink-0" />
                 <span>+255 123 456 789</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
-                <Mail size={18} className="text-[#038ED3] shrink-0" />
+                <Mail size={18} className="text-[#02557f] shrink-0" />
                 <span>info@dingonet.com</span>
               </li>
             </ul>
@@ -115,8 +115,8 @@ export default function Footer() {
             © {currentYear} Dingonet. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-slate-400">
-            <Link href="/privacy" className="hover:text-[#038ED3]">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[#038ED3]">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-[#02557f]">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-[#02557f]">Terms of Service</Link>
           </div>
         </div>
       </div>

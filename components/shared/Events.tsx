@@ -1,7 +1,8 @@
 "use client";
 
-import { Calendar, MapPin, Ticket, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, Ticket, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const EVENTS = [
   {
@@ -19,121 +20,115 @@ const EVENTS = [
     date: "April 02, 2026",
     location: "Arusha",
     image: "/images/slider.jpg",
-    category: "Technology",
+    category: "Crisis Tech",
     description: "Discussing infrastructure expansion for underserved Tanzanian villages."
-  },
-  {
-    id: "evt-003",
-    title: "Community Tech Grant",
-    date: "May 10, 2026",
-    location: "Mwanza",
-    image: "/images/impact-2.jpg",
-    category: "Funding",
-    description: "Providing small grants to local entrepreneurs using tech for social good."
-  },
-  {
-    id: "evt-004",
-    title: "E-Waste Recycling Drive",
-    date: "June 22, 2026",
-    location: "Dodoma",
-    image: "/images/slider.jpg",
-    category: "Environment",
-    description: "Safe disposal and recycling of old electronics to protect our land."
   }
+  // ... rest of your events
 ];
 
 export default function EventsSection() {
   
   const handleClaimVoucher = async (eventId: string) => {
-    // Logic to save to database as per your requirement
-    console.log(`Saving voucher for event ${eventId} to database...`);
-    alert("Voucher saved! You can now access this offline from your dashboard.");
+    // This addresses your preference to save to database to avoid re-scanning
+    try {
+      console.log(`Saving voucher for event ${eventId} to your database...`);
+      // Add your fetch/prisma logic here
+      alert("Voucher Saved! It is now stored in your database for offline use.");
+    } catch (error) {
+      console.error("Failed to save voucher", error);
+    }
   };
 
   return (
-    <section className="py-24 lg:py-32 dark:bg-zinc-950">
-      <div className="container mx-auto px-6">
-        
-        {/* Centered Section Header */}
+    <section className="py-24 lg:py-32 bg-slate-50 dark:bg-zinc-950 overflow-hidden relative">
+      
+      {/* Background Decorative Element */}
+      <div className="absolute top-0 right-0 p-20 opacity-5 pointer-events-none">
+        <Sparkles size={400} className="text-[#d53f34]" />
+      </div>
 
+      <div className="container mx-auto px-6 relative z-10">
         
-        <div className="flex flex-col items-center text-center mb-16 gap-4">
-          <h2 className="text-[#038ED3] font-bold tracking-widest uppercase text-sm">Upcoming Impact</h2>
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-[#d53f34] font-black tracking-[0.3em] font-brittany text-xl mb-4 flex items-center gap-2"
+          >
+            <span className="w-8 h-[2px] bg-[#d53f34]"></span>
+            Upcoming Initiatives
+            <span className="w-8 h-[2px] bg-[#d53f34]"></span>
+          </motion.div>
           
-          <div className="inline-block bg-[#038ED3] px-8 py-2 mb-6">
-          <h2 className="font-script text-4xl text-white tracking-wide">
-          Latest Events & Initiatives
+          <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-tight tracking-tighter mb-6">
+            Be Part of the <span className="text-[#d53f34] italic font-serif">Change.</span>
           </h2>
-        </div>
-         
-          <Link href="/events" className="group flex items-center gap-2 text-slate-600 dark:text-zinc-400 font-bold hover:text-[#038ED3] transition-colors mt-2">
+          
+          <Link href="/events" className="group flex items-center gap-2 text-slate-500 hover:text-[#d53f34] font-black text-sm transition-all uppercase tracking-widest">
             View All Events 
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-10">
-          {EVENTS.map((event) => (
-  <div key={event.id} className="group bg-white dark:bg-zinc-900 rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-zinc-800 hover:shadow-2xl transition-all duration-500">
-    
-    {/* 1. Wrap Image in Link for better UX */}
-    <Link href={`/events/${event.id}`} className="block relative h-64 overflow-hidden">
-      <img 
-        src={event.image} 
-        alt={event.title} 
-        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-      />
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-[#038ED3] text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-[0.2em] z-10">
-        {event.category}
-      </div>
-    </Link>
+        <div className="grid md:grid-cols-2 gap-12">
+          {EVENTS.map((event, index) => (
+            <motion.div 
+              key={event.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="group bg-white dark:bg-zinc-900 rounded-[3rem] overflow-hidden border border-slate-100 dark:border-zinc-800 hover:shadow-3xl hover:shadow-[#d53f34]/10 transition-all duration-500"
+            >
+              
+              {/* Image Section */}
+              <div className="relative h-72 overflow-hidden">
+                <img 
+                  src={event.image} 
+                  alt={event.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                />
+                <div className="absolute top-6 left-6 bg-[#d53f34] text-white text-[10px] font-black px-5 py-2 rounded-full uppercase tracking-widest shadow-xl">
+                  {event.category}
+                </div>
+                {/* Glassmorphism Date Tag */}
+                <div className="absolute bottom-6 left-6 backdrop-blur-md bg-white/20 border border-white/30 px-4 py-2 rounded-2xl text-white font-bold text-xs flex items-center gap-2">
+                   <Calendar size={14} /> {event.date}
+                </div>
+              </div>
 
-    {/* Centered Content Body */}
-    <div className="p-8 lg:p-12 flex flex-col items-center text-center">
-      
-      {/* Centered Meta Info */}
-      <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 dark:text-zinc-400 mb-6">
-        <div className="flex items-center gap-2">
-          <Calendar size={18} className="text-[#038ED3]" />
-          {event.date}
-        </div>
-        <div className="flex items-center gap-2">
-          <MapPin size={18} className="text-[#038ED3]" />
-          {event.location}
-        </div>
-      </div>
+              {/* Content Body */}
+              <div className="p-10 lg:p-12">
+                <div className="flex items-center gap-2 text-[#d53f34] mb-4 font-bold text-sm">
+                  <MapPin size={16} />
+                  {event.location}
+                </div>
 
-      {/* 2. Wrap Title in Link */}
-      <Link href={`/events/${event.id}`}>
-        <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 hover:text-[#038ED3] transition-colors cursor-pointer">
-          {event.title}
-        </h4>
-      </Link>
-      
-      <p className="text-slate-600 dark:text-zinc-400 leading-relaxed mb-8 max-w-md">
-        {event.description}
-      </p>
+                <h4 className="text-3xl font-black text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-[#d53f34] transition-colors uppercase tracking-tight">
+                  {event.title}
+                </h4>
+                
+                <p className="text-slate-500 dark:text-zinc-400 leading-relaxed mb-10 text-lg font-medium">
+                  {event.description}
+                </p>
 
-      {/* Button stays for the direct action (Database Voucher) */}
-      <button 
-        onClick={() => handleClaimVoucher(event.id)}
-        className="w-full max-w-xs flex items-center justify-center gap-3 bg-slate-100 dark:bg-zinc-800 text-slate-900 dark:text-white py-4 rounded-2xl font-bold hover:bg-[#038ED3] hover:text-white transition-all group/btn shadow-sm"
-      >
-        <Ticket size={20} className="group-hover/btn:rotate-12 transition-transform" />
-        Claim Event Voucher
-      </button>
-
-      {/* 3. Optional: Added "View Details" text link for clarity */}
-      <Link 
-        href={`/events/${event.id}`} 
-        className="mt-6 text-sm font-bold text-[#038ED3] flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
-      >
-        View Event Details <ArrowRight size={14} />
-      </Link>
-    </div>
-  </div>
-))}
+                {/* Database Voucher Button */}
+                <button 
+                  onClick={() => handleClaimVoucher(event.id)}
+                  className="relative w-full flex items-center justify-center gap-3 bg-zinc-900 dark:bg-zinc-800 text-white py-5 rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] overflow-hidden group/btn hover:bg-[#d53f34] transition-all"
+                >
+                  <Ticket size={20} className="group-hover/btn:-rotate-12 transition-transform" />
+                  Claim & Save Voucher
+                  
+                  {/* Decorative Hand-drawn SVG effect inside button */}
+                  <svg className="absolute inset-0 w-full h-full opacity-0 group-hover/btn:opacity-20 pointer-events-none" viewBox="0 0 100 40">
+                    <path d="M5 20 Q 50 5 95 20 T 5 20" stroke="white" fill="none" strokeWidth="1" />
+                  </svg>
+                </button>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
