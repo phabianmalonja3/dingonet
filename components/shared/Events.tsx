@@ -3,6 +3,7 @@
 import { Calendar, MapPin, Users, ArrowRight, Sparkles, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const INITIATIVES = [
   {
@@ -22,6 +23,24 @@ const INITIATIVES = [
     image: "/images/slider.jpg",
     category: "Infrastructure",
     description: "Strategic planning for deploying mesh networks in underserved Tanzanian villages."
+  },
+  {
+    id: "init-003",
+    title: "Community Health Outreach",
+    date: "April 18, 2026",
+    location: "Mwanza",
+    image: "/images/slider.jpg",
+    category: "Infrastructure",
+    description: "Providing essential health services and education in underserved communities."
+  },
+  {
+    id: "init-004",
+    title: "Digital Literacy Workshop",
+    date: "May 10, 2026",
+    location: "Dodoma",
+    image: "/images/impact-1.jpg",
+    category: "Education",
+    description: "Empowering local youth with essential digital skills and internet safety knowledge."
   }
 ];
 
@@ -80,8 +99,10 @@ export default function EventsSection() {
               
               {/* Image Section */}
               <div className="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
-                <img 
+                <Image 
                   src={init.image} 
+                  unoptimized
+                  fill
                   alt={init.title} 
                   className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110" 
                 />
