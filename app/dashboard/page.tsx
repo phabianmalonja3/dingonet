@@ -1,161 +1,145 @@
+"use client";
 
-"use client";   
 import React from "react";
+import { motion } from "framer-motion";
 import { 
-  Ticket, 
-  LayoutDashboard, 
-  Database, 
-  History, 
-  Settings, 
-  PlusCircle, 
-  Search 
+  Users, 
+  Globe2, 
+  Activity, 
+  ShieldAlert, 
+  Map as MapIcon, 
+  Zap, 
+  ArrowUpRight,
+  Plus
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 
-// Mock Data for the Charts
-const chartData = [
-  { day: "Mon", scans: 12 },
-  { day: "Tue", scans: 18 },
-  { day: "Wed", scans: 7 },
-  { day: "Thu", scans: 25 },
-  { day: "Fri", scans: 32 },
-  { day: "Sat", scans: 45 },
-  { day: "Sun", scans: 20 },
+const STATS = [
+  { label: "Active Operations", value: "12", icon: <Activity className="text-[#d53f34]" />, trend: "+2 this week" },
+  { label: "Communities Reached", value: "148", icon: <Globe2 className="text-[#02557f]" />, trend: "+12% growth" },
+  { label: "Field Volunteers", value: "842", icon: <Users className="text-[#02557f]" />, trend: "Active now" },
+  { label: "Critical Alerts", value: "3", icon: <ShieldAlert className="text-[#d53f34]" />, trend: "Needs attention" },
 ];
 
-// Mock Data for the Voucher Table
-const voucherData = [
-  { id: "1", code: "DINGO-9921-X", date: "2026-01-20", status: "Stored", type: "1 Hour" },
-  { id: "2", code: "DINGO-4410-L", date: "2026-01-21", status: "Used", type: "Unlimited" },
-  { id: "3", code: "DINGO-1002-K", date: "2026-01-21", status: "Stored", type: "30 Mins" },
-  { id: "4", code: "DINGO-8827-P", date: "2026-01-22", status: "Stored", type: "1 Hour" },
+const RECENT_MIDS = [
+  { id: "M-902", mission: "Arusha Mesh Grid", status: "Deploying", priority: "High" },
+  { id: "M-901", mission: "Coastal Education", status: "Active", priority: "Medium" },
+  { id: "M-899", mission: "Flood Response", status: "Completed", priority: "Critical" },
 ];
 
-export default function DingoNetDashboard() {
+export default function HumanitarianDashboard() {
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Sidebar Navigation */}
-      <aside className="w-64 border-r bg-card hidden md:block">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
-            <Ticket className="w-6 h-6" /> DingoNet
-          </h1>
-        </div>
-        <nav className="px-4 space-y-2">
-          <Button variant="secondary" className="w-full justify-start gap-2">
-            <LayoutDashboard className="w-4 h-4" /> Dashboard
-          </Button>
-          <Button variant="ghost" className="w-full justify-start gap-2">
-            <Database className="w-4 h-4" /> Database
-          </Button>
-          <Button variant="ghost" className="w-full justify-start gap-2">
-            <History className="w-4 h-4" /> Scan History
-          </Button>
-          <Button variant="ghost" className="w-full justify-start gap-2">
-            <Settings className="w-4 h-4" /> Settings
-          </Button>
-        </nav>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    /* 1. Added transition-all for smooth movement when sidebar collapses 
+       2. Added lg:pl-[280px] to push content away from the sidebar
+    */
+    <div className="min-h-screen bg-slate-50 dark:bg-black p-4 lg:p-12 lg:pl-[300px] transition-all duration-300 font-sans">
+      
+      {/* This wrapper ensures the content is centered within the 
+         available space left over by the sidebar 
+      */}
+      <div className="max-w-6xl mx-auto">
+        
+        {/* Top Header Block */}
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight">Voucher Management</h2>
-            <p className="text-muted-foreground">Monitor and manage your scanned DingoNet codes.</p>
-          </div>
-          <div className="flex gap-2">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search codes..." className="pl-8 w-[250px]" />
+            <div className="flex items-center gap-2 text-[#d53f34] mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#d53f34] animate-pulse"></span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em]">Live HQ Feed</span>
             </div>
-            <Button className="gap-2">
-              <PlusCircle className="w-4 h-4" /> New Scan
-            </Button>
+            <h1 className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tighter uppercase">
+              Mission <span className="text-[#02557f] italic font-serif lowercase">Control.</span>
+            </h1>
           </div>
+          
+          <button className="flex items-center gap-3 bg-[#02557f] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-[#d53f34] transition-all shadow-xl shadow-[#02557f]/20 active:scale-95">
+            <Plus size={18} /> New Operation
+          </button>
         </header>
 
-        {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total Stored</CardTitle>
-              <Database className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,429</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Active This Week</CardTitle>
-              <Ticket className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">+159</div>
-            </CardContent>
-          </Card>
-          {/* Add more stats cards as needed */}
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-          {/* Chart Section */}
-          <Card className="lg:col-span-4">
-            <CardHeader>
-              <CardTitle>Scanning Activity</CardTitle>
-              <CardDescription>Vouchers added to database over the last 7 days.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData}>
-                    <XAxis dataKey="day" axisLine={false} tickLine={false} fontSize={12} />
-                    <YAxis axisLine={false} tickLine={false} fontSize={12} />
-                    <Tooltip cursor={{fill: 'transparent'}} />
-                    <Bar dataKey="scans" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
+        {/* Stats Grid Block */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {STATS.map((stat, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white dark:bg-zinc-900 p-8 rounded-[2.5rem] border border-slate-100 dark:border-zinc-800 shadow-sm"
+            >
+              <div className="flex justify-between items-start mb-6">
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-zinc-800">
+                  {stat.icon}
+                </div>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.trend}</span>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Table Section */}
-          <Card className="lg:col-span-3">
-            <CardHeader>
-              <CardTitle>Recent Entries</CardTitle>
-              <CardDescription>Latest vouchers saved to your database.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {voucherData.map((voucher) => (
-                    <TableRow key={voucher.id}>
-                      <TableCell className="font-mono text-xs">{voucher.code}</TableCell>
-                      <TableCell>
-                        <Badge variant={voucher.status === "Used" ? "secondary" : "default"}>
-                          {voucher.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <Button variant="link" className="w-full mt-4 text-xs">View all vouchers</Button>
-            </CardContent>
-          </Card>
+              <h3 className="text-4xl font-black text-slate-900 dark:text-white mb-1">{stat.value}</h3>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
+            </motion.div>
+          ))}
         </div>
-      </main>
+
+        {/* Main Content Block */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          
+          {/* Active Missions List */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="bg-white dark:bg-zinc-900 rounded-[3rem] border border-slate-100 dark:border-zinc-800 shadow-sm overflow-hidden">
+              <div className="p-8 border-b border-slate-50 dark:border-zinc-800 flex justify-between items-center">
+                <h2 className="font-black uppercase text-xs tracking-[0.2em] text-slate-900 dark:text-white">Active Operations</h2>
+                <button className="text-[10px] font-black uppercase text-[#02557f] hover:text-[#d53f34] transition-colors">View All</button>
+              </div>
+              <div className="divide-y divide-slate-50 dark:divide-zinc-800">
+                {RECENT_MIDS.map((item) => (
+                  <div key={item.id} className="p-8 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-6">
+                      <div className="w-12 h-12 rounded-2xl bg-[#02557f]/5 flex items-center justify-center text-[#02557f] font-black text-xs">
+                        {item.id}
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 dark:text-white uppercase text-sm group-hover:text-[#02557f] transition-colors">{item.mission}</h4>
+                        <div className="flex gap-3 items-center mt-1">
+                          <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
+                            item.priority === 'Critical' ? 'bg-red-100 text-red-600' : 'bg-slate-100 dark:bg-zinc-800 text-slate-500'
+                          }`}>
+                            {item.priority}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-8">
+                       <span className="hidden md:inline text-[10px] font-black text-[#02557f] uppercase tracking-widest">{item.status}</span>
+                       <button className="p-2 text-slate-300 group-hover:text-[#d53f34] transition-all group-hover:translate-x-1"><ArrowUpRight size={20}/></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar-within-Dashboard Block */}
+          <div className="space-y-8">
+            <div className="bg-[#02557f] p-10 rounded-[3rem] text-white relative overflow-hidden group shadow-xl shadow-[#02557f]/20">
+              <Zap className="absolute -right-4 -bottom-4 text-white opacity-10 w-32 h-32 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-black uppercase tracking-tighter mb-4 italic">Power Operations</h3>
+              <p className="text-white/70 text-sm mb-8 font-medium">Request resources or deploy emergency connectivity units instantly.</p>
+              <div className="space-y-3">
+                <button className="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">Request Supply</button>
+                <button className="w-full py-4 bg-[#d53f34] hover:bg-black rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">Emergency Beacon</button>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 p-8 rounded-[3rem] border border-slate-100 dark:border-zinc-800 shadow-sm">
+               <div className="flex items-center gap-3 mb-6">
+                  <MapIcon className="text-[#02557f]" size={20} />
+                  <h3 className="font-black uppercase text-xs tracking-widest">Regional Spread</h3>
+               </div>
+               <div className="aspect-square bg-slate-100 dark:bg-zinc-800 rounded-3xl flex items-center justify-center border-2 border-dashed border-slate-200 dark:border-zinc-700">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Map Interface Ready</p>
+               </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }

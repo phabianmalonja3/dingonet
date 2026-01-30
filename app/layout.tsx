@@ -5,6 +5,8 @@ import "./globals.css";
 import Navbar from "@/components/shared/NavBar";
 import Footer from "@/components/shared/Footer";
 import ScrollToTop from "@/components/shared/ScrollToTop";
+import WrapNav from "@/components/shared/WrapNav";
+import WrapFooter from "@/components/shared/WrapFooter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +38,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
+      <WrapNav  />
         {children}
 
-        <Footer />
+       <WrapFooter />
 <ScrollToTop />
 
       </body>
