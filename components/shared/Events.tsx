@@ -99,6 +99,8 @@ export default function EventsSection() {
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
+
+        
         
         {/* HEADER BLOCK */}
         <div className="flex flex-col items-start mb-24 gap-10">
@@ -162,7 +164,7 @@ export default function EventsSection() {
             </svg>
           </div>
           <div className="relative z-10 text-center lg:text-left">
-            <h3 className="text-slate-900 dark:text-white text-3xl lg:text-5xl font-black tracking-tighter mb-2 uppercase">Cannot attend <span className="text-[#02557f] font-brittany lowercase">in person?</span></h3>
+            <h3 className="text-slate-900 dark:text-white text-3xl lg:text-5xl font-black tracking-tighter mb-2 uppercase">Cannot attend <span className="text-[#d53f34] font-brittany lowercase">in person?</span></h3>
             <p className="text-slate-500 dark:text-zinc-400 font-medium max-w-lg leading-relaxed">Support the logistics of our field operations from anywhere.</p>
           </div>
           <Link href="/donate" className="group relative z-10 bg-[#d53f34] text-white px-10 py-6 rounded-3xl font-black uppercase text-xs tracking-[0.2em] transition-all flex items-center gap-4 overflow-hidden shadow-xl shadow-[#d53f34]/20">
