@@ -2,151 +2,164 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Quote, ChevronLeft, ChevronRight, Heart, Sparkles } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight, Sparkles, Heart } from "lucide-react";
 import Image from "next/image";
 
 const TESTIMONIALS = [
   {
-    quote: "Through the digital literacy program, our women's group now manages our finances online and reaches customers across the country.",
+    quote: "Our women's group now manages finances online and reaches customers across the country.",
     author: "Mama Sophia",
-    role: "Chairperson, Community Women Group",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=600&h=600&auto=format&fit=crop",
+    role: "Chairperson",
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=200&h=200&auto=format&fit=crop",
   },
   {
-    quote: "Access to the internet has allowed our local clinic to consult with specialists in Dar es Salaam, saving lives in our village.",
+    quote: "Access to the internet has allowed our clinic to consult with specialists, saving lives.",
     author: "Dr. Elias",
-    role: "Lead Physician, Rural Health Center",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=600&h=600&auto=format&fit=crop",
-  },
-  {
-    quote: "The students are now learning coding and global history. The digital gap is finally closing for our children.",
-    author: "Mwalimu Bakari",
-    role: "Headmaster, Secondary School",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&h=600&auto=format&fit=crop",
+    role: "Lead Physician",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=200&h=200&auto=format&fit=crop",
   },
 ];
 
-export default function TestimonialSection() {
+export default function CompactTestimonials() {
   const [index, setIndex] = useState(0);
-  const contentRef = useRef(null);
-  const bgTextRef = useRef(null);
+  const cardRef = useRef(null);
+  const bgShapeRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    // 1. Content Transition
-    gsap.fromTo(contentRef.current, 
-      { opacity: 0, scale: 0.9, rotateY: 15 }, 
-      { opacity: 1, scale: 1, rotateY: 0, duration: 1, ease: "expo.out" }
-    );
+    const ctx = gsap.context(() => {
+      // 1. Entrance & Switch Animation
+      gsap.fromTo(cardRef.current, 
+        { opacity: 0, y: 10 }, 
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+      );
 
-    // 2. Parallax Background Text effect
-    gsap.to(bgTextRef.current, {
-      xPercent: -10,
-      scrollTrigger: {
-        trigger: bgTextRef.current,
-        scrub: 1,
+      // 2. Slow rotation for the humanitarian hub SVG
+      if (bgShapeRef.current) {
+        gsap.to(bgShapeRef.current, {
+          rotate: 360,
+          duration: 80,
+          repeat: -1,
+          ease: "none",
+        });
       }
     });
+    return () => ctx.revert();
   }, [index]);
 
   const next = () => setIndex((prev) => (prev + 1) % TESTIMONIALS.length);
   const prev = () => setIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
 
   return (
-    <section className="relative py-32 bg-white dark:bg-black overflow-hidden perspective-1000">
+    <section className="py-16 bg-white dark:bg-black overflow-hidden relative">
       
-      {/* Cinematic Background Text */}
-      <div 
-        ref={bgTextRef}
-        className="absolute top-1/2 -translate-y-1/2 left-0 whitespace-nowrap text-[15rem] font-black text-slate-100 dark:text-zinc-900/30 select-none pointer-events-none z-0 tracking-tighter"
-      >
-        REAL STORIES REAL IMPACT REAL PEOPLE
-      </div>
+      {/* BACKGROUND SVG: Coherent with Operational Ecosystem component */}
+   {/* HUMAN CONNECTION NETWORK: Coherent with Humanitarian Mission */}
+<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.08] dark:opacity-[0.2] pointer-events-none z-0">
+  <svg 
+    ref={bgShapeRef}
+    width="800" 
+    height="800" 
+    viewBox="0 0 100 100" 
+    stroke="#d53f34" 
+    fill="none" 
+    strokeWidth="0.15"
+  >
+    {/* Organic Connection Paths */}
+    <path d="M10 50 Q 30 10 50 50 T 90 50" strokeDasharray="2 2" />
+    <path d="M20 20 Q 50 80 80 20" opacity="0.5" />
+    <path d="M20 80 Q 50 20 80 80" opacity="0.5" />
+
+    {/* Community Nodes (People/Villages) */}
+    <g className="community-nodes">
+      <circle cx="10" cy="50" r="1.5" fill="#d53f34" />
+      <circle cx="50" cy="50" r="2.5" strokeWidth="0.5" /> {/* The Hub */}
+      <circle cx="90" cy="50" r="1.5" fill="#d53f34" />
+      <circle cx="50" cy="15" r="1" fill="#02557f" />
+      <circle cx="50" cy="85" r="1" fill="#02557f" />
+      
+      {/* Decorative pulse on the main hub */}
+      <circle cx="50" cy="50" r="4" stroke="#d53f34" opacity="0.3">
+        <animate attributeName="r" from="4" to="8" dur="3s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="0.3" to="0" dur="3s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    {/* Data Flow Particles (Tiny dots along paths) */}
+    <circle r="0.5" fill="#d53f34">
+      <animateMotion dur="10s" repeatCount="indefinite" path="M10 50 Q 30 10 50 50 T 90 50" />
+    </circle>
+  </svg>
+</div>
 
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* Section Heading */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 font-brittany rounded-full bg-[#d53f34]/10 text-[#d53f34] text-xl font-black  tracking-[0.2em]">
-            <Sparkles size={14} className="fill-[#d53f34]" /> 
-            Voices of Change
+        {/* Header Block */}
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-[#d53f34] text-[10px] font-black uppercase tracking-[0.3em]">
+              <Sparkles size={12} className="animate-pulse" /> Ground Intel
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
+              The Human <span className="text-[#02557f] italic font-serif lowercase">Impact.</span>
+            </h2>
           </div>
-          <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter uppercase leading-[0.9]">
-            The Human <span className="text-[#d53f34]">Connection.</span>
-          </h2>
+          
+          {/* Navigation */}
+          <div className="flex gap-2">
+            <button onClick={prev} className="p-3 rounded-2xl border border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:border-[#d53f34] transition-all active:scale-90 shadow-sm">
+              <ChevronLeft size={20} className="text-slate-400" />
+            </button>
+            <button onClick={next} className="p-3 rounded-2xl bg-[#02557f] text-white hover:bg-[#d53f34] transition-all active:scale-90 shadow-lg shadow-[#02557f]/20">
+              <ChevronRight size={20} />
+            </button>
+          </div>
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          <div 
-            ref={contentRef} 
-            className="grid lg:grid-cols-[1fr_1.5fr] gap-0 items-center bg-white dark:bg-zinc-900 rounded-[4rem] overflow-hidden border border-slate-100 dark:border-zinc-800 shadow-2xl"
-          >
+        {/* Testimonial Card */}
+        <div ref={cardRef} className="bg-white dark:bg-zinc-900/80 backdrop-blur-md p-8 md:p-12 rounded-[3rem] border border-slate-100 dark:border-zinc-800 shadow-xl relative overflow-hidden">
+          
+          {/* Subtle Corner Accents (Targeting Brackets) */}
+          <div className="absolute top-6 right-6 opacity-20">
+             <div className="w-8 h-8 border-t-2 border-r-2 border-[#d53f34] rounded-tr-xl" />
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
             
-            {/* Left: Visual Side */}
-            <div className="relative h-[400px] lg:h-full min-h-[500px] group overflow-hidden">
-              <Image 
-                src={TESTIMONIALS[index].image} 
-                alt={TESTIMONIALS[index].author}
-                fill
-                unoptimized
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#d53f34]/60 to-transparent mix-blend-multiply" />
-              
-              {/* Floating Role Tag */}
-              <div className="absolute bottom-10 left-10 right-10 backdrop-blur-md bg-white/10 border border-white/20 p-6 rounded-3xl text-white">
-                 <p className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Impact Focus</p>
-                 <p className="text-lg font-bold leading-tight">{TESTIMONIALS[index].role}</p>
+            {/* Visual Identity Block */}
+            <div className="relative shrink-0">
+              <div className="relative w-24 h-24 md:w-32 md:h-32">
+                <Image 
+                  src={TESTIMONIALS[index].image} 
+                  alt={TESTIMONIALS[index].author}
+                  unoptimized
+                  fill
+                  className="object-cover rounded-[2rem] z-10"
+                />
+                {/* Decorative pulse ring */}
+                <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[#d53f34]/20 animate-ping" />
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-[#d53f34] p-2 rounded-xl text-white shadow-lg z-20">
+                <Heart size={14} fill="currentColor" />
               </div>
             </div>
 
-            {/* Right: Content Side */}
-            <div className="p-10 lg:p-20 flex flex-col justify-center relative bg-slate-50 dark:bg-zinc-900/50">
-              {/* Giant Watermark Quote */}
-              <Quote size={120} className="absolute top-10 right-10 text-[#d53f34] opacity-5 pointer-events-none" fill="currentColor" />
+            {/* Narrative Block */}
+            <div className="flex-grow">
+              <Quote size={40} className="text-[#d53f34] opacity-10 mb-4" fill="currentColor" />
               
-              <div className="relative z-10">
-                <div className="w-12 h-1 bg-[#d53f34] mb-8" />
-                
-                <p className="font-serif italic text-2xl lg:text-4xl text-slate-800 dark:text-zinc-100 leading-[1.3] mb-12">
-                  &quot;{TESTIMONIALS[index].quote}&quot;
-                </p>
-
-                <div className="flex items-center gap-6">
-                  <div className="h-[2px] w-8 bg-slate-300 dark:bg-zinc-700" />
-                  <div>
-                    <h4 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                      {TESTIMONIALS[index].author}
-                    </h4>
-                    <p className="text-[#d53f34] font-black text-[10px] uppercase tracking-[0.3em] mt-1">
-                      Verified Story
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Controls inside the card */}
-              <div className="flex items-center gap-4 mt-16">
-                <button 
-                  onClick={prev}
-                  className="w-14 h-14 rounded-full flex items-center justify-center border border-slate-200 dark:border-zinc-800 text-slate-400 hover:bg-[#d53f34] hover:text-white hover:border-[#d53f34] transition-all active:scale-90"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-                <button 
-                  onClick={next}
-                  className="w-14 h-14 rounded-full flex items-center justify-center bg-zinc-900 dark:bg-zinc-800 text-white hover:bg-[#d53f34] transition-all active:scale-90 shadow-xl"
-                >
-                  <ChevronRight size={24} />
-                </button>
-                
-                <div className="ml-auto flex gap-1.5">
-                  {TESTIMONIALS.map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`h-1.5 rounded-full transition-all duration-500 ${i === index ? "w-8 bg-[#d53f34]" : "w-2 bg-slate-300 dark:bg-zinc-700"}`}
-                    />
-                  ))}
+              <p className="text-xl md:text-2xl font-medium text-slate-800 dark:text-zinc-100 leading-relaxed mb-8">
+                &quot;{TESTIMONIALS[index].quote}&quot;
+              </p>
+              
+              <div className="flex flex-col gap-1">
+                <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tighter">
+                  {TESTIMONIALS[index].author}
+                </h4>
+                <div className="flex items-center gap-3">
+                   <div className="w-4 h-[1px] bg-[#d53f34]" />
+                   <p className="text-[10px] font-black text-[#02557f] uppercase tracking-[0.2em]">
+                    {TESTIMONIALS[index].role}
+                  </p>
                 </div>
               </div>
             </div>
