@@ -47,7 +47,9 @@ const NAV_LINKS = [
     ]
   },
   { name: "Our Team", href: "/members" },
-  { name: "Vouchers", href: "/vouchers" },
+  // { name: "Humanitarian Services", href: "/services" },
+  { name: "About Us", href: "/about" },
+  { name: "Contact Us", href: "/contact" },
 ];
 
 export default function Navbar() {

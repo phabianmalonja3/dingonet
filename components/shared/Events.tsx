@@ -63,28 +63,45 @@ export default function EventsSection() {
       <div className="container mx-auto px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
-          <div className="max-w-3xl">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="text-[#d53f34] font-black tracking-[0.3em] uppercase text-xs mb-6 flex items-center gap-3"
-            >
-              <span className="w-12 h-[2px] bg-[#d53f34]"></span>
-              Active Field Operations
-            </motion.div>
-            
-            <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[0.9] tracking-tighter">
-              Humanitarian <br />
-              <span className="text-[#d53f34] italic font-serif lowercase">Initiatives.</span>
-            </h2>
-          </div>
-          
-          <Link href="/initiatives" className="group flex items-center gap-3 bg-slate-50 dark:bg-zinc-900 px-8 py-4 rounded-2xl text-slate-900 dark:text-white font-black text-xs transition-all uppercase tracking-widest border border-slate-100 dark:border-zinc-800 hover:border-[#d53f34]">
-            Explore All Missions 
-            <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform text-[#d53f34]" />
-          </Link>
-        </div>
+      <div className="flex flex-col items-start mb-24 gap-10">
+  
+  {/* Top Block: Label */}
+  <motion.div 
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.5 }}
+    className="text-[#d53f34] font-black tracking-[0.3em] uppercase text-[10px] flex items-center gap-3"
+  >
+    <span className="w-12 h-[2px] bg-[#d53f34]"></span>
+    Active Field Operations
+  </motion.div>
+  
+  {/* Middle Block: Main Title */}
+  <div className="max-w-4xl">
+    <h2 className="text-6xl lg:text-8xl font-black text-slate-900 dark:text-white leading-[0.85] tracking-tighter">
+      Humanitarian <br />
+      <span className="text-[#d53f34] font-brittany lowercase block mt-2 text-7xl lg:text-9xl">
+        Initiatives.
+      </span>
+    </h2>
+  </div>
+
+  {/* Bottom Block: Description & Link */}
+  <div className="flex flex-col md:flex-row md:items-end justify-between w-full gap-8">
+    <p className="max-w-md text-slate-500 dark:text-zinc-400 font-medium leading-relaxed text-lg">
+      We deploy technology and resources to the frontlines, ensuring Tanzanian 
+      communities have the connectivity they need for crisis response and education.
+    </p>
+
+    <Link 
+      href="/initiatives" 
+      className="group flex items-center justify-center gap-4 bg-zinc-900 dark:bg-white text-white dark:text-black px-12 py-6 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all hover:bg-[#d53f34] dark:hover:bg-[#d53f34] dark:hover:text-white shadow-xl active:scale-95 shrink-0"
+    >
+      Explore All Missions 
+      <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+    </Link>
+  </div>
+</div>
 
         {/* Initiatives Grid */}
         <div className="grid lg:grid-cols-2 gap-10">
